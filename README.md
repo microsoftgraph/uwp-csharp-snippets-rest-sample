@@ -40,7 +40,7 @@ Before you can register the application in the Azure portal, you need to find ou
 1. Open the solution in Visual Studio 2015. 
 2. Make sure that your Platform Target is set to x86 or x64.
 3. Press F5.
-4. After the app launches, press the **Copy** button ![alt text](https://github.com/AndrewJByrne/O365-UWP-Unified-API-Connect/blob/master/readme-images/copy_icon.png) located in the menu on the top left of the app. This will copy the redirect URI for the app to the clipboard. 
+4. After the app launches, press the **Copy** button ![alt text](/readme-images/copy_icon.png) located in the menu on the top left of the app. This will copy the redirect URI for the app to the clipboard. 
 5. Store this value. You will use it when registering the app, as described in the following section. 
 
 
@@ -58,7 +58,7 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 3.	On the top menu, click **Applications**.
 4.	Click **Add** from the bottom menu.
 5.	On the **What do you want to do page**, click **Add an application my organization is developing**.
-6.	On the **Tell us about your application page**, select **NATIVE CLIENT APPLICATION** for type and specify a name for the app, for example **O365-UWP-Connect**.
+6.	On the **Tell us about your application page**, select **NATIVE CLIENT APPLICATION** for type and specify a name for the app, for example **O365-UWP-Snippets**.
 7.	Click the arrow icon on the lower-right corner of the page.
 8.	On the **Application information** page, enter the redirect URI value that you obtained during the previous step.
 9.	Once the application is successfully added, you'll be taken to the **Quick Start** page for the application. From there, select **Configure** in the top menu.
@@ -85,7 +85,7 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 **Note:** If you see any errors while installing packages during step 2, make sure the local path where you placed the solution is not too long/deep. Moving the solution closer to the root of your drive resolves this issue.
 
 1. After you've loaded the solution in Visual Studio, configure the sample to use the client id that you registered in Azure Active Directory and the domain of your tenant by adding the corresponding values for these keys in the Application.Resources node of the App.xaml file.
-![Office 365 UWP unified API connect sample](/readme-images/ClientTenant.png "Client ID value in App.xaml file")`
+![Office 365 UWP unified API snippets sample](/readme-images/ClientTenant.png "Client ID value in App.xaml file")`
 
 2. Press F5 to build and debug. Run the solution and sign in to Office 365 with your organizational account.
 
@@ -93,7 +93,7 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 <a name="questions"></a>
 ## Questions and comments
 
-We'd love to get your feedback about the O365 UWP unified API Connect project. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/O365-UWP-Unified-API-Connect/issues) section of this repository.
+We'd love to get your feedback about the O365 UWP unified API Snippets project. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/O365-UWP-Unified-API-Snippets/issues) section of this repository.
 
 Questions about Office 365 development in general should be posted to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure that your questions or comments are tagged with [Office365] and [API].
 
