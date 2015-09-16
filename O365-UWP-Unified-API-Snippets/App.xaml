@@ -9,10 +9,10 @@
 
     <Application.Resources>
         <!-- Add your client id here. -->
-        <x:String x:Key="ida:ClientID">5f071bea-736d-4214-9e31-02783f019c7f</x:String>
+        <x:String x:Key="ida:ClientID"></x:String>
         <x:String x:Key="ida:AADInstance">https://login.microsoftonline.com/</x:String>
         <!-- Add your developer tenant domain here. -->
-        <x:String x:Key="ida:Domain">patsoldemo6.onmicrosoft.com</x:String>
+        <x:String x:Key="ida:Domain">yourtenant.onmicrosoft.com</x:String>
 
     </Application.Resources>
 
