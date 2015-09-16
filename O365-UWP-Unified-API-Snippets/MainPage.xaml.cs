@@ -60,6 +60,10 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Delete Event", RunStoryAsync = UserStories.TryDeleteEventAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Messages", RunStoryAsync = UserStories.TryGetMessages });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Send Message", RunStoryAsync = UserStories.TrySendMailAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Manager", RunStoryAsync = UserStories.TryGetCurrentUserManagerAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Directs", RunStoryAsync = UserStories.TryGetDirectReportsAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Photo", RunStoryAsync = UserStories.TryGetCurrentUserPhotoAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get User Groups", RunStoryAsync = UserStories.TryGetCurrentUserGroupsAsync });
             
 
             var result = from story in StoryCollection group story by story.GroupName into api orderby api.Key select api;

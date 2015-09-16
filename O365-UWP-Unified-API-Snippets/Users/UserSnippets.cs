@@ -164,10 +164,10 @@ namespace O365_UWP_Unified_API_Snippets
 
         }
 
-        // Gets the signed-in user's drive from OneDrive.
+        // Gets the signed-in user's drive.
         public static async Task<string> GetCurrentUserDriveAsync()
         {
-            string currentUserDrive = null;
+            string currentUserDriveId = null;
             JObject jResult = null;
 
             try
@@ -185,8 +185,8 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
-                    currentUserDrive = (string)jResult["id"];
-                    Debug.WriteLine("Got user drive: " + currentUserDrive);
+                    currentUserDriveId = (string)jResult["id"];
+                    Debug.WriteLine("Got user drive: " + currentUserDriveId);
                 }
 
                 else
@@ -205,7 +205,7 @@ namespace O365_UWP_Unified_API_Snippets
 
             }
 
-            return currentUserDrive;
+            return currentUserDriveId;
 
         }
 
@@ -506,6 +506,195 @@ namespace O365_UWP_Unified_API_Snippets
             }
 
             return emailSent;
+        }
+
+        // Gets the signed-in user's manager.
+        public static async Task<string> GetCurrentUserManagerAsync()
+        {
+            string currentUserManager = null;
+            JObject jResult = null;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for all users in an organization
+                Uri managerEndpoint = new Uri(serviceEndpoint + "me/manager");
+
+                HttpResponseMessage response = await client.GetAsync(managerEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    jResult = JObject.Parse(responseContent);
+                    currentUserManager = (string)jResult["displayName"];
+                    Debug.WriteLine("Got manager: " + currentUserManager);
+                }
+
+                else
+                {
+                    Debug.WriteLine("We could not get the current user's manager. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+            }
+
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not get the current user's manager: " + e.Message);
+                return null;
+
+            }
+
+            return currentUserManager;
+
+        }
+
+        // Gets the signed-in user's direct reports.
+        public static async Task<List<string>> GetDirectReportsAsync()
+        {
+            var directReports = new List<string>();
+            JObject jResult = null;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for all users in an organization
+                Uri directsEndpoint = new Uri(serviceEndpoint + "me/directReports");
+
+                HttpResponseMessage response = await client.GetAsync(directsEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    jResult = JObject.Parse(responseContent);
+
+                    foreach (JObject user in jResult["value"])
+                    {
+                        string userName = (string)user["displayName"];
+                        directReports.Add(userName);
+                        Debug.WriteLine("Got direct report: " + userName);
+                    }
+                }
+
+                else
+                {
+                    Debug.WriteLine("We could not get direct reports. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+                return directReports;
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not get direct reports: " + e.Message);
+                return null;
+            }
+
+
+        }
+
+
+        // Gets the signed-in user's photo.
+        public static async Task<string> GetCurrentUserPhotoAsync()
+        {
+            string currentUserPhotoId = null;
+            JObject jResult = null;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for all users in an organization
+                Uri photoEndpoint = new Uri(serviceEndpoint + "me/userPhoto");
+
+                HttpResponseMessage response = await client.GetAsync(photoEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    jResult = JObject.Parse(responseContent);
+                    currentUserPhotoId = (string)jResult["Id"];
+                    Debug.WriteLine("Got user photo: " + currentUserPhotoId);
+                }
+
+                else
+                {
+                    Debug.WriteLine("We could not get the current user. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+            }
+
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not get the current user: " + e.Message);
+                return null;
+
+            }
+
+            return currentUserPhotoId;
+
+        }
+
+        // Gets the groups that the signed-in user is a member of.
+        public static async Task<List<string>> GetCurrentUserGroupsAsync()
+        {
+            var memberOfGroups = new List<string>();
+            JObject jResult = null;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for all users in an organization
+                Uri memberOfEndpoint = new Uri(serviceEndpoint + "me/memberOf");
+
+                HttpResponseMessage response = await client.GetAsync(memberOfEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    jResult = JObject.Parse(responseContent);
+
+                    foreach (JObject user in jResult["value"])
+                    {
+                        string groupName = (string)user["displayName"];
+                        memberOfGroups.Add(groupName);
+                        Debug.WriteLine("Got direct report: " + groupName);
+                    }
+                }
+
+                else
+                {
+                    Debug.WriteLine("We could not get direct reports. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+                return memberOfGroups;
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not get direct reports: " + e.Message);
+                return null;
+            }
+
+
         }
 
     }

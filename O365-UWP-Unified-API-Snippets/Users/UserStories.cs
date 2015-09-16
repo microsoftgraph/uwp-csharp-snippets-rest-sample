@@ -37,14 +37,13 @@ namespace O365_UWP_Unified_API_Snippets
 
         public static async Task<bool> TryGetCurrentUserDriveAsync()
         {
-            string driveName = await UserSnippets.GetCurrentUserDriveAsync();
-            return driveName != null;
+            string driveId = await UserSnippets.GetCurrentUserDriveAsync();
+            return driveId != null;
         }
 
         public static async Task<bool> TryGetEventsAsync()
         {
             var events = await UserSnippets.GetEventsAsync();
-
             return events != null;
         }
 
@@ -83,6 +82,29 @@ namespace O365_UWP_Unified_API_Snippets
                 );
         }
 
+        public static async Task<bool> TryGetCurrentUserManagerAsync()
+        {
+            string managerName = await UserSnippets.GetCurrentUserManagerAsync();
+            return managerName != null;
+        }
+
+        public static async Task<bool> TryGetDirectReportsAsync()
+        {
+            var users = await UserSnippets.GetDirectReportsAsync();
+            return users != null;
+        }
+
+        public static async Task<bool> TryGetCurrentUserPhotoAsync()
+        {
+            string photoId = await UserSnippets.GetCurrentUserPhotoAsync();
+            return photoId != null;
+        }
+
+        public static async Task<bool> TryGetCurrentUserGroupsAsync()
+        {
+            var groups = await UserSnippets.GetCurrentUserGroupsAsync();
+            return groups != null;
+        }
     }
 }
 
