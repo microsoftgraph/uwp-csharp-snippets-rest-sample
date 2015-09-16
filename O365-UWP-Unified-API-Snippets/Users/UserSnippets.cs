@@ -17,7 +17,6 @@ namespace O365_UWP_Unified_API_Snippets
         static string tenant = App.Current.Resources["ida:Domain"].ToString();
 
         // Returns information about the signed-in user from Azure Active Directory.
-
         public static async Task<string> GetMeAsync()
         {
             string currentUser = null;
@@ -62,7 +61,7 @@ namespace O365_UWP_Unified_API_Snippets
         }
 
 
-        // Returns all of the users in the directory of the signed-in user's tenant. This snippet requires an admin account.
+        // Returns all of the users in the directory of the signed-in user's tenant. 
         public static async Task<List<string>> GetUsersAsync()
         {
             var users = new List<string>();
@@ -111,7 +110,7 @@ namespace O365_UWP_Unified_API_Snippets
 
         }
 
-        // Creates a new user in the signed-in user's tenant.
+        // Creates a new user in the signed-in user's tenant. This snippet requires an admin account.
         public static async Task<string> CreateUserAsync(string userName)
         {
             JObject jResult = null;

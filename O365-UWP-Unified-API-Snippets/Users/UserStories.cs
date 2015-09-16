@@ -25,7 +25,6 @@ namespace O365_UWP_Unified_API_Snippets
         public static async Task<bool> TryGetUsersAsync()
         {
             var users = await UserSnippets.GetUsersAsync();
-
             return users != null;
         }
 

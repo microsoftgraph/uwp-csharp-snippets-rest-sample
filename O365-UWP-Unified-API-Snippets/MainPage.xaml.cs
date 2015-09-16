@@ -50,10 +50,13 @@ namespace O365_UWP_Unified_API_Snippets
 
             // These stories require your app to have permission to access your organization's directory. 
             // Comment them if you're not going to run the app with that permission level.
+
+            // User stories
+
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Me", RunStoryAsync = UserStories.TryGetMeAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Read Users", RunStoryAsync = UserStories.TryGetUsersAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Create User", RunStoryAsync = UserStories.TryCreateUserAsync });
-            StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get User Drive", RunStoryAsync = UserStories.TryGetCurrentUserDriveAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Drive", RunStoryAsync = UserStories.TryGetCurrentUserDriveAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Events", RunStoryAsync = UserStories.TryGetEventsAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Create Event", RunStoryAsync = UserStories.TryCreateEventAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Update Event", RunStoryAsync = UserStories.TryUpdateEventAsync });
@@ -64,6 +67,16 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Directs", RunStoryAsync = UserStories.TryGetDirectReportsAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Photo", RunStoryAsync = UserStories.TryGetCurrentUserPhotoAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get User Groups", RunStoryAsync = UserStories.TryGetCurrentUserGroupsAsync });
+
+            //Group stories
+
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Get All Groups", RunStoryAsync = GroupStories.TryGetGroupsAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Get a Group", RunStoryAsync = GroupStories.TryGetGroupAsync });            
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Get Members", RunStoryAsync = GroupStories.TryGetGroupMembersAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Get Owners", RunStoryAsync = GroupStories.TryGetGroupOwnersAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Create Group", RunStoryAsync = GroupStories.TryCreateGroupAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Update Group", RunStoryAsync = GroupStories.TryUpdateGroupAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Delete Group", RunStoryAsync = GroupStories.TryDeleteGroupAsync });
             
 
             var result = from story in StoryCollection group story by story.GroupName into api orderby api.Key select api;
