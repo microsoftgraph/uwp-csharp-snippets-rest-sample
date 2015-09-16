@@ -21,6 +21,7 @@
                 <RowDefinition Height="90"/>
             </Grid.RowDefinitions>
 
+            <ScrollViewer VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto">
             <GridView Grid.Row="0" ItemsSource="{Binding Source={StaticResource StoriesByApi}}" Margin="0,20,0,0" SelectionMode="Multiple" x:Name="StoryGrid">
                 <GridView.ItemTemplate>
                     <DataTemplate>
@@ -53,21 +54,30 @@
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>
+            </ScrollViewer>
         </Grid>
 
     </Grid>
 
 
-    <Page.BottomAppBar>
+    <Page.TopAppBar>
         <CommandBar HorizontalAlignment="Center">
-            <AppBarButton Icon="Play" Label="run all" Click="RunAll_Click" />
+            <CommandBar.Content>
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="appTitle" Text="Unified API Snippets"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       TextWrapping="Wrap"
+                       FontSize="{ThemeResource TextStyleExtraLargeFontSize}" Margin="40,0,0,0"
+                       />
+
+            </CommandBar.Content>
             <AppBarButton Icon="Play" Label="run selected" Click="RunSelectedStories_Click" />
             <AppBarButton Icon="ClearSelection" Label="clear selection" Click="ClearSelection_Click" />
             <AppBarButton Icon="Clear" Label="disconnect" Click="Disconnect_Click" />
             <AppBarButton Icon="Copy"  Label="copy redirect URI" Click="CopyRedirectUriToClipboard_Click" />
         </CommandBar>
 
-    </Page.BottomAppBar>
+    </Page.TopAppBar>
 </Page>
 
 <!--

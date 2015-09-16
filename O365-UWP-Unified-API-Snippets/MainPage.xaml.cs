@@ -129,16 +129,6 @@ namespace O365_UWP_Unified_API_Snippets
             //Application.Current.Exit();
         }
 
-        private async void RunAll_Click(object sender, RoutedEventArgs e)
-        {
-            StoryGrid.SelectedItems.Clear();
-            foreach (var item in StoryGrid.Items)
-            {
-                StoryGrid.SelectedItems.Add(item);
-            }
-            await runSelectedAsync();
-        }
-
         private void ResetStories()
         {
             foreach (var story in StoryCollection)
