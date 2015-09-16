@@ -40,7 +40,7 @@ Before you can register the application in the Azure portal, you need to find ou
 1. Open the solution in Visual Studio 2015. 
 2. Make sure that your Platform Target is set to x86 or x64.
 3. Press F5.
-4. After the app launches, press the **Copy** button ![alt text](https://github.com/AndrewJByrne/O365-UWP-Unified-API-Snippets/blob/master/readme-images/copy_icon.png) located in the menu on the top left of the app. This will copy the redirect URI for the app to the clipboard. 
+4. After the app launches, press the **Copy** button ![alt text](/readme-images/copy_icon.png) located in the menu on the top left of the app. This will copy the redirect URI for the app to the clipboard. 
 5. Store this value. You will use it when registering the app, as described in the following section. 
 
 
