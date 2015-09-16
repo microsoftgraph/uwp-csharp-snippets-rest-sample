@@ -71,7 +71,6 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 	* Read signed-in user's mail
 	* Read all users' full profiles
 	* Read and write signed-in user's profile
-	* Read signed-in user's contacts
 	* Access directory as the signed-in user
 	* Read and write directory data
 12.	Copy the value specified for **Client ID** on the **Configure** page.
