@@ -62,9 +62,22 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 7.	Click the arrow icon on the lower-right corner of the page.
 8.	On the **Application information** page, enter the redirect URI value that you obtained during the previous step.
 9.	Once the application is successfully added, you'll be taken to the **Quick Start** page for the application. From there, select **Configure** in the top menu.
-10.	Under **permissions to other applications**, select **Add application**. In the dialog box, select the **Office 365 unified API (preview)** application. After you return to the application configuration page, select the **Send mail as signed-in user** permission.
-11.	Copy the value specified for **Client ID** on the **Configure** page.
-12.	Click **Save** in the bottom menu.
+10.	Under **permissions to other applications**, select **Add application**. In the dialog box, select the **Office 365 unified API (preview)** application. 
+11.	Select the following permissions: 
+	* Read and write signed-in user's calendars
+	* Read signed-in user's contacts
+	* Read signed-in user's files
+	* Send mail as signed-in user
+	* Read signed-in user's mail
+	* Read all users' full profiles
+	* Read and write signed-in user's profile
+	* Read signed-in user's contacts
+	* Access directory as the signed-in user
+	* Read and write directory data
+12.	Copy the value specified for **Client ID** on the **Configure** page.
+13.	Click **Save** in the bottom menu.
+
+**Note: The Read and write directory data permission allows the app to create a user in the tenant. That operation will work only when the signed-in user is an admin in the tenant.**
 
 <a name="build"></a>
 ## Build and debug ##
