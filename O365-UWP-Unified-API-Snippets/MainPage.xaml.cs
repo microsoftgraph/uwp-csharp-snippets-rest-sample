@@ -68,7 +68,7 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Photo", RunStoryAsync = UserStories.TryGetCurrentUserPhotoAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get User Groups", RunStoryAsync = UserStories.TryGetCurrentUserGroupsAsync });
 
-            //Group stories
+            // Group stories
 
             StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Get All Groups", RunStoryAsync = GroupStories.TryGetGroupsAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Get a Group", RunStoryAsync = GroupStories.TryGetGroupAsync });            
@@ -77,6 +77,11 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Create Group", RunStoryAsync = GroupStories.TryCreateGroupAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Update Group", RunStoryAsync = GroupStories.TryUpdateGroupAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Delete Group", RunStoryAsync = GroupStories.TryDeleteGroupAsync });
+
+
+            // Contacts stories
+
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Contacts", Title = "Get Org Contacts", RunStoryAsync = ContactsStories.TryGetContactsAsync });
             
 
             var result = from story in StoryCollection group story by story.GroupName into api orderby api.Key select api;

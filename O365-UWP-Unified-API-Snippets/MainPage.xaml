@@ -20,7 +20,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="90"/>
             </Grid.RowDefinitions>
-            <!--<ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto" Width="Auto">-->
+
             <GridView Grid.Row="0" ItemsSource="{Binding Source={StaticResource StoriesByApi}}" Margin="0,20,0,0" SelectionMode="Multiple" x:Name="StoryGrid">
                 <GridView.ItemTemplate>
                     <DataTemplate>
@@ -53,7 +53,6 @@
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>
-            <!--</ScrollViewer>-->
         </Grid>
 
     </Grid>
