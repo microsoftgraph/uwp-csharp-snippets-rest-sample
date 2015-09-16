@@ -15,7 +15,7 @@ namespace O365_UWP_Unified_API_Snippets
     {
         const string serviceEndpoint = "https://graph.microsoft.com/beta/";
 
-        // Returns all of the contacts in your organization.
+        // Returns all of the contacts in your tenant's directory.
         public static async Task<List<string>> GetContactsAsync()
         {
             var contacts = new List<string>();
