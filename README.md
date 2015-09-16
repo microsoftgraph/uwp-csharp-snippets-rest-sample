@@ -14,6 +14,11 @@
 ##Introduction
 
 This sample shows how to use the unified API to send email, manage groups, and perform other activities with Office 365 data.
+The Office 365 unified API exposes multiple APIs from Microsoft cloud services through a single REST API endpoint. This repository shows you how to access multiple resources, including Microsoft Azure Active Directory (AD) and the Office 365 APIs, by making HTTP requests to the Office 365 unified API in a Windows 10 universal app. 
+
+
+**Note: If possible, please use this sample with a "non-work" or test account in Office 365. With the current version of the project, it does not always clean up the created objects in your mailbox and calendar. At this time you'll have to manually remove sample mails and calendar events.**  
+
 
 <a name="prerequisites"></a>
 ## Prerequisites ##
