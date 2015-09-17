@@ -18,7 +18,7 @@ namespace O365_UWP_Unified_API_Snippets
             if (Object.Equals(field, value))
                 return false;
 
-            // Raise any registered property changed events and indicate to the user that the value was indeed changed.
+            // Raise any registered property changed events, and indicate to the user that the value was indeed changed.
             field = value;
             NotifyPropertyChanged(propertyName);
             return true;
@@ -44,7 +44,7 @@ namespace O365_UWP_Unified_API_Snippets
 // MIT License:
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
-// ""Software""), to deal in the Software without restriction, including
+// "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
