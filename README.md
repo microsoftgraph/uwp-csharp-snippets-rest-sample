@@ -28,9 +28,10 @@ This sample requires the following:
   * Windows 10 Tools for Visual Studio
   * Windows 10 (development mode enabled)
   * An Office 365 account. You can sign up for [an Office 365 Developer subscription](http://aka.ms/ro9c62) that includes the resources that you need to start building Office 365 apps.
-  * A Microsoft Azure tenant to register your application. Azure Active Directory (AD) provides identity services that applications use for authentication and authorization. A trial subscription can be acquired here: [Microsoft Azure](http://aka.ms/jjm0q7).
+  * A Microsoft Azure tenant to register your application. Azure AD provides identity services that applications use for authentication and authorization. A trial subscription can be acquired here: [Microsoft Azure](https://account.windowsazure.com/SignUp).
 
-**Important**: You will also need to ensure your Azure subscription is bound to your Office 365 tenant. To do this, see the Active Directory team's blog post, [Creating and Managing Multiple Windows Azure Active Directories](http://blogs.technet.com/b/ad/archive/2013/11/08/creating-and-managing-multiple-windows-azure-active-directories.aspx). In this post, the *Adding a new directory* section will explain how to do this. You can also read [Set up your Office 365 development environment](https://msdn.microsoft.com/office/office365/howto/setup-development-environment#bk_CreateAzureSubscription) for more information.
+     > Important: You will also need to ensure your Azure subscription is bound to your Office 365 tenant. To do this see the Active Directory team's blog post, [Creating and Managing Multiple Windows Azure Active Directories](http://blogs.technet.com/b/ad/archive/2013/11/08/creating-and-managing-multiple-windows-azure-active-directories.aspx). The section **Adding a new directory** will explain how to do this. You can also see [Set up your Office 365 development environment](https://msdn.microsoft.com/office/office365/howto/setup-development-environment#bk_CreateAzureSubscription) and the section **Associate your Office 365 account with Azure AD to create and manage apps** for more information.
+      
 
 <a name="redirect"></a>
 ## Find the system-assigned redirect URI for the app
@@ -40,7 +41,7 @@ Before you can register the application in the Azure portal, you need to find ou
 1. Open the solution in Visual Studio 2015. 
 2. Make sure that your Platform Target is set to x86 or x64.
 3. Press F5.
-4. After the app launches, press the **Copy** button ![alt text](/readme-images/copy_icon.png) located in the menu on the top left of the app. This will copy the redirect URI for the app to the clipboard. 
+4. After the app launches, choose the **Copy** button ![alt text](/readme-images/copy_icon.png) located in the menu on the top left of the app. This will copy the redirect URI for the app to the clipboard. 
 5. Store this value. You will use it when registering the app, as described in the following section. 
 
 
@@ -71,7 +72,6 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 	* Read signed-in user's mail
 	* Read all users' full profiles
 	* Read and write signed-in user's profile
-	* Read signed-in user's contacts
 	* Access directory as the signed-in user
 	* Read and write directory data
 12.	Copy the value specified for **Client ID** on the **Configure** page.
