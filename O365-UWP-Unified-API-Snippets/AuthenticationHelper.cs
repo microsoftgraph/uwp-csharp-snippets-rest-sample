@@ -25,10 +25,10 @@ namespace O365_UWP_Unified_API_Snippets
         //Use the domain-specific authority when you're authenticating users from a single tenant only.
         static string authority = AADInstance + tenant;
 
-        //Use "organizations" as your authority when you want the app to work on any Azure Tenant.
-        //static string authority = "organizations";
+        // Use "organizations" as your authority when you want the app to work on any Azure Tenant.
+        // static string authority = "organizations";
 
-        // To authenticate to the Unified API, the client needs to know its App ID URI.
+        // To authenticate to the unified API, the client needs to know its App ID URI.
         public const string ResourceUrl = "https://graph.microsoft.com/";
         private const string provider = "https://login.windows.net";
 
@@ -49,7 +49,7 @@ namespace O365_UWP_Unified_API_Snippets
 
             aadAccountProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync(provider, authority);
 
-            // Check if there's a record of the last account used with the app
+            // Check if there's a record of the last account used with the app.
             var userID = _settings.Values["userID"];
 
             if (userID != null)
@@ -59,11 +59,11 @@ namespace O365_UWP_Unified_API_Snippets
                 webTokenRequest.Properties.Add("resource", ResourceUrl);
                 webTokenRequest.Properties.Add("authority", provider);
 
-                // Get an account object for the user
+                // Get an account object for the user.
                 userAccount = await WebAuthenticationCoreManager.FindAccountAsync(aadAccountProvider, (string)userID);
 
 
-                // Ensure that the saved account works for getting the token we need
+                // Ensure that the saved account works for getting the token we need.
                 WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest, userAccount);
                 if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success || webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.AccountSwitch)
                 {
@@ -74,15 +74,15 @@ namespace O365_UWP_Unified_API_Snippets
                 }
                 else
                 {
-                    // The saved account could not be used for getting a token
-                    // Make sure that the UX is ready for a new sign in
+                    // The saved account could not be used for getting a token.
+                    // Make sure that the UX is ready for a new sign in.
                     SignOut();
                 }
 
             }
             else
             {
-                // There is no recorded user. Start a sign in flow without imposing a specific account.
+                // There is no recorded user. Start a sign-in flow without imposing a specific account.
 
                 WebTokenRequest webTokenRequest = new WebTokenRequest(aadAccountProvider, string.Empty, clientId, WebTokenRequestPromptType.ForceAuthentication);
                 webTokenRequest.Properties.Add("resource", ResourceUrl);
@@ -100,7 +100,7 @@ namespace O365_UWP_Unified_API_Snippets
             // We succeeded in getting a valid user.
             if (userAccount != null)
             {
-                // save user ID in local storage
+                // Save user ID in local storage.
                 _settings.Values["userID"] = userAccount.Id;
                 _settings.Values["userEmail"] = userAccount.UserName;
                 _settings.Values["userName"] = userAccount.Properties["DisplayName"];

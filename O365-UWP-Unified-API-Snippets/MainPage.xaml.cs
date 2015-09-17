@@ -40,7 +40,7 @@ namespace O365_UWP_Unified_API_Snippets
             // Developer code - if you haven't registered the app yet, we warn you. 
             if (!App.Current.Resources.ContainsKey("ida:ClientID"))
             {
-                Debug.WriteLine("Oops - App not registered with Office 365. To run this sample, you must register it with Office 365. You can do that through the 'Add | Connected services' dialog in Visual Studio. See Readme for more info");
+                Debug.WriteLine("Oops - App not registered with Office 365. To run this sample, you must register it with Office 365. See Readme for more info.");
 
             }
         }
@@ -126,7 +126,7 @@ namespace O365_UWP_Unified_API_Snippets
             }
 
             // To shut down this app when the Stories complete, uncomment the following line. 
-            //Application.Current.Exit();
+            // Application.Current.Exit();
         }
 
         private void ResetStories()
