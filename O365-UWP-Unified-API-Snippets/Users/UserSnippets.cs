@@ -258,6 +258,7 @@ namespace O365_UWP_Unified_API_Snippets
         }
 
         // Creates a new event in the signed-in user's tenant.
+        // Important note: This will create a user with a weak password. Consider deleting this user after you run the sample.
         public static async Task<string> CreateEventAsync()
         {
             JObject jResult = null;
