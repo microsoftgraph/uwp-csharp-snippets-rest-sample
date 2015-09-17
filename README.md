@@ -77,7 +77,7 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 12.	Copy the value specified for **Client ID** on the **Configure** page.
 13.	Click **Save** in the bottom menu.
 
-**Note: The Read and write directory data permission allows the app to create a user in the tenant. That operation will work only when the signed-in user is an admin in the tenant.**
+**Note**: The **Read and write directory data** permission allows the app to create a user in the tenant. Do not set this permission unless you intend to run the sample with an admin account. The **Create User** snippet will return a 403 (Forbidden) status code if you run the sample with a non-admin account.
 
 <a name="build"></a>
 ## Build and debug ##
