@@ -30,7 +30,6 @@ namespace O365_UWP_Unified_API_Snippets
 
         // To authenticate to the unified API, the client needs to know its App ID URI.
         public const string ResourceUrl = "https://graph.microsoft.com/";
-        private const string provider = "https://login.windows.net";
 
         private static WebAccountProvider aadAccountProvider = null;
         private static WebAccount userAccount = null;
@@ -47,7 +46,7 @@ namespace O365_UWP_Unified_API_Snippets
 
             string token = null;
 
-            aadAccountProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync(provider, authority);
+            aadAccountProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync("https://login.microsoft.com", authority);
 
             // Check if there's a record of the last account used with the app.
             var userID = _settings.Values["userID"];
@@ -57,7 +56,6 @@ namespace O365_UWP_Unified_API_Snippets
 
                 WebTokenRequest webTokenRequest = new WebTokenRequest(aadAccountProvider, string.Empty, clientId);
                 webTokenRequest.Properties.Add("resource", ResourceUrl);
-                webTokenRequest.Properties.Add("authority", provider);
 
                 // Get an account object for the user.
                 userAccount = await WebAuthenticationCoreManager.FindAccountAsync(aadAccountProvider, (string)userID);
@@ -86,7 +84,7 @@ namespace O365_UWP_Unified_API_Snippets
 
                 WebTokenRequest webTokenRequest = new WebTokenRequest(aadAccountProvider, string.Empty, clientId, WebTokenRequestPromptType.ForceAuthentication);
                 webTokenRequest.Properties.Add("resource", ResourceUrl);
-                webTokenRequest.Properties.Add("authority", provider);
+
                 WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest);
                 if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success)
                 {
