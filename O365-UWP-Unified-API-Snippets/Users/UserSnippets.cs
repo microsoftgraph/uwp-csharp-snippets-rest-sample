@@ -670,17 +670,17 @@ namespace O365_UWP_Unified_API_Snippets
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
 
-                    foreach (JObject user in jResult["value"])
+                    foreach (JObject group in jResult["value"])
                     {
-                        string groupName = (string)user["displayName"];
-                        memberOfGroups.Add(groupName);
-                        Debug.WriteLine("Got direct report: " + groupName);
+                        string groupId = (string)group["objectId"];
+                        memberOfGroups.Add(groupId);
+                        Debug.WriteLine("Got group: " + groupId);
                     }
                 }
 
                 else
                 {
-                    Debug.WriteLine("We could not get direct reports. The request returned this status code: " + response.StatusCode);
+                    Debug.WriteLine("We could not get user groups. The request returned this status code: " + response.StatusCode);
                     return null;
                 }
 
@@ -690,7 +690,7 @@ namespace O365_UWP_Unified_API_Snippets
 
             catch (Exception e)
             {
-                Debug.WriteLine("We could not get direct reports: " + e.Message);
+                Debug.WriteLine("We could not get user groups: " + e.Message);
                 return null;
             }
 
