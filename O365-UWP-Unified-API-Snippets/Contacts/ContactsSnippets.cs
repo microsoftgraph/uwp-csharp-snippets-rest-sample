@@ -37,9 +37,9 @@ namespace O365_UWP_Unified_API_Snippets
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
 
-                    foreach (JObject user in jResult["value"])
+                    foreach (JObject contact in jResult["value"])
                     {
-                        string contactName = (string)user["displayName"];
+                        string contactName = (string)contact["displayName"];
                         contacts.Add(contactName);
                         Debug.WriteLine("Got contact: " + contactName);
                     }

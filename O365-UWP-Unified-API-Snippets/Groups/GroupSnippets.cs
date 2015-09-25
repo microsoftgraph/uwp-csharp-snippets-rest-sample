@@ -38,9 +38,9 @@ namespace O365_UWP_Unified_API_Snippets
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
 
-                    foreach (JObject user in jResult["value"])
+                    foreach (JObject group in jResult["value"])
                     {
-                        string groupId = (string)user["objectId"];
+                        string groupId = (string)group["objectId"];
                         groups.Add(groupId);
                         Debug.WriteLine("Got group: " + groupId);
                     }
