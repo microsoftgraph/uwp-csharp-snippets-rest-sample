@@ -38,7 +38,7 @@ namespace O365_UWP_Unified_API_Snippets
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
                     currentUser = (string)jResult["displayName"];
-                    Debug.WriteLine("Created user: " + currentUser);
+                    Debug.WriteLine("Got user: " + currentUser);
                 }
 
                 else
@@ -190,7 +190,7 @@ namespace O365_UWP_Unified_API_Snippets
 
                 else
                 {
-                    Debug.WriteLine("We could not get the current user. The request returned this status code: " + response.StatusCode);
+                    Debug.WriteLine("We could not get the current user drive. The request returned this status code: " + response.StatusCode);
                     return null;
                 }
 
@@ -199,7 +199,7 @@ namespace O365_UWP_Unified_API_Snippets
 
             catch (Exception e)
             {
-                Debug.WriteLine("We could not get the current user: " + e.Message);
+                Debug.WriteLine("We could not get the current user drive: " + e.Message);
                 return null;
 
             }
@@ -469,6 +469,10 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
+                // Endpoint for all messages in an organization
+                Uri messageEndpoint = new Uri(serviceEndpoint + "me/SendMail");
+
+
                 string recipientJSON = "{'EmailAddress':{'Address':'" + RecipientAddress + "'}}";
 
                 // Build contents of post body and convert to StringContent object.
@@ -483,7 +487,7 @@ namespace O365_UWP_Unified_API_Snippets
 
                 var emailBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync(new Uri("https://graph.microsoft.com/beta/me/Microsoft.Graph.SendMail"), emailBody);
+                HttpResponseMessage response = await client.PostAsync(messageEndpoint, emailBody);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -630,7 +634,7 @@ namespace O365_UWP_Unified_API_Snippets
 
                 else
                 {
-                    Debug.WriteLine("We could not get the current user. The request returned this status code: " + response.StatusCode);
+                    Debug.WriteLine("We could not get the current user photo. The request returned this status code: " + response.StatusCode);
                     return null;
                 }
 
@@ -639,7 +643,7 @@ namespace O365_UWP_Unified_API_Snippets
 
             catch (Exception e)
             {
-                Debug.WriteLine("We could not get the current user: " + e.Message);
+                Debug.WriteLine("We could not get the current user photo: " + e.Message);
                 return null;
 
             }
