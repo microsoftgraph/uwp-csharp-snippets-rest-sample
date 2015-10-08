@@ -7,6 +7,7 @@
 * [Find the system-assigned redirect URI](#redirect)
 * [Register and configure the app](#register)
 * [Build and debug](#build)
+* [How the sample affects your tenant data](#how-the-sample-affects-your-tenant-data)
 * [Questions and comments](#questions)
 * [Additional resources](#additional-resources)
 
@@ -89,6 +90,9 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 
 2. Press F5 to build and debug. Run the solution and sign in to Office 365 with your organizational account.
 
+<a name="#how-the-sample-affects-your-tenant-data"></a>
+##How the sample affects your tenant data
+This sample runs REST commands that create, read, update, or delete data. When running commands that delete or edit data, the sample creates fake entities. The fake entities are deleted or edited so that your actual tenant data is unaffected. The sample will leave behind fake entities on your tenant.
 
 <a name="questions"></a>
 ## Questions and comments
