@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,6 +104,58 @@ namespace O365_UWP_Unified_API_Snippets
         {
             var groups = await UserSnippets.GetCurrentUserGroupsAsync();
             return groups != null;
+        }
+
+        public static async Task<bool> TryGetCurrentUserFilesAsync()
+        {
+            var files = await UserSnippets.GetCurrentUserFilesAsync();
+            return files != null;
+        }
+
+        public static async Task<bool> TryCreateFileAsync()
+        {
+            var createdFileId = await UserSnippets.CreateFileAsync(Guid.NewGuid().ToString(), STORY_DATA_IDENTIFIER);
+            return createdFileId != null;
+        }
+
+        public static async Task<bool> TryDownloadFileAsync()
+        {
+            var createdFileId = await UserSnippets.CreateFileAsync(Guid.NewGuid().ToString(), STORY_DATA_IDENTIFIER);
+            var fileContent = await UserSnippets.DownloadFileAsync(createdFileId);
+            return fileContent != null;
+        }
+
+        public static async Task<bool> TryUpdateFileAsync()
+        {
+            var createdFileId = await UserSnippets.CreateFileAsync(Guid.NewGuid().ToString(), STORY_DATA_IDENTIFIER);
+            return await UserSnippets.UpdateFileAsync(createdFileId, STORY_DATA_IDENTIFIER);
+        }
+
+        public static async Task<bool> TryCopyFileAsync()
+        {
+            var copyFileName = Guid.NewGuid().ToString();
+            var createdFileId = await UserSnippets.CreateFileAsync(Guid.NewGuid().ToString(), STORY_DATA_IDENTIFIER);
+            return await UserSnippets.CopyFileAsync(createdFileId, copyFileName);
+        }
+
+        public static async Task<bool> TryRenameFileAsync()
+        {
+            var newFileName = Guid.NewGuid().ToString();
+            var createdFileId = await UserSnippets.CreateFileAsync(Guid.NewGuid().ToString(), STORY_DATA_IDENTIFIER);
+            return await UserSnippets.RenameFileAsync(createdFileId, newFileName);
+        }
+
+        public static async Task<bool> TryDeleteFileAsync()
+        {
+            var fileName = Guid.NewGuid().ToString();
+            var createdFileId = await UserSnippets.CreateFileAsync(Guid.NewGuid().ToString(), STORY_DATA_IDENTIFIER);
+            return await UserSnippets.DeleteFileAsync(createdFileId);
+        }
+
+        public static async Task<bool> TryCreateFolderAsync()
+        {
+            var createdFolderId = await UserSnippets.CreateFolderAsync(Guid.NewGuid().ToString());
+            return createdFolderId != null;
         }
     }
 }

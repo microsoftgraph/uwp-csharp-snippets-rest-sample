@@ -13,7 +13,7 @@ namespace O365_UWP_Unified_API_Snippets
 {
     class GroupSnippets
     {
-        const string serviceEndpoint = "https://graph.microsoft.com/beta/";
+        const string serviceEndpoint = "https://graph.microsoft.com/v1.0/";
         static string tenant = App.Current.Resources["ida:Domain"].ToString();
 
         // Returns all of the groups in your tenant's directory.
