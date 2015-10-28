@@ -223,7 +223,7 @@ namespace O365_UWP_Unified_API_Snippets
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's events
-                Uri usersEndpoint = new Uri(serviceEndpoint + "me/events?$select=id");
+                Uri usersEndpoint = new Uri(serviceEndpoint + "me/events");
 
                 HttpResponseMessage response = await client.GetAsync(usersEndpoint);
 
@@ -283,8 +283,8 @@ namespace O365_UWP_Unified_API_Snippets
                 string postBody = "{'Subject':'Weekly Sync',"
                                 + "'Location':{'DisplayName':'Water Cooler'},"
                                 + "'Attendees':[{'Type':'Required','EmailAddress': {'Address':'mara@fabrikam.com'} }],"
-                                + "'Start':'" + new DateTimeOffset(new DateTime(2014, 12, 1, 9, 30, 0)).ToString("o") + "',"
-                                + "'End':'" + new DateTimeOffset(new DateTime(2014, 12, 1, 10, 0, 0)).ToString("o") + "',"
+                                + "'Start': {'DateTime': '" + new DateTime(2014, 12, 1, 9, 30, 0).ToString("o") + "', 'TimeZone':'UTC'},"
+                                + "'End': {'DateTime': '" + new DateTime(2014, 12, 1, 10, 0, 0).ToString("o") + "', 'TimeZone':'UTC'},"
                                 + "'Body':{'Content': 'Status updates, blocking issues, and next steps.', 'ContentType':'Text'}}";
 
                 var createBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
