@@ -9,13 +9,13 @@ using Windows.Storage;
 
 namespace O365_UWP_Unified_API_Snippets
 {
-    class ContactsStories
+    class OrganizationStories
     {
 
-        public static async Task<bool> TryGetContactsAsync()
+        public static async Task<bool> TryGetDrivesAsync()
         {
-            var groups = await ContactsSnippets.GetContactsAsync();
-            return groups != null;
+            var drives = await OrganizationSnippets.GetDrivesAsync();
+            return drives != null;
         }
 
     }

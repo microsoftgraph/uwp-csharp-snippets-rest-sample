@@ -88,9 +88,9 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Groups", Title = "Delete Group", RunStoryAsync = GroupStories.TryDeleteGroupAsync });
 
 
-            // Contacts stories
+            // Organization stories
 
-            StoryCollection.Add(new StoryDefinition() { GroupName = "Contacts", Title = "Get Org Contacts", RunStoryAsync = ContactsStories.TryGetContactsAsync });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Organization", Title = "Get Org Drives", RunStoryAsync = OrganizationStories.TryGetDrivesAsync });
 
 
             var result = from story in StoryCollection group story by story.GroupName into api orderby api.Key select api;

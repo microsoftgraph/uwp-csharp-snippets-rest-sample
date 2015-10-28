@@ -11,14 +11,15 @@ using System.Threading.Tasks;
 
 namespace O365_UWP_Unified_API_Snippets
 {
-    class ContactsSnippets
+    class OrganizationSnippets
     {
         const string serviceEndpoint = "https://graph.microsoft.com/v1.0/";
 
         // Returns all of the contacts in your tenant's directory.
-        public static async Task<List<string>> GetContactsAsync()
+        // Returns all of the drives in your tenant's directory.
+        public static async Task<List<string>> GetDrivesAsync()
         {
-            var contacts = new List<string>();
+            var drives = new List<string>();
             JObject jResult = null;
 
             try
@@ -28,7 +29,7 @@ namespace O365_UWP_Unified_API_Snippets
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all contacts in your organization
-                Uri contactsEndpoint = new Uri(serviceEndpoint + "myOrganization/contacts");
+                Uri contactsEndpoint = new Uri(serviceEndpoint + "myOrganization/drives");
 
                 HttpResponseMessage response = await client.GetAsync(contactsEndpoint);
 
@@ -39,25 +40,25 @@ namespace O365_UWP_Unified_API_Snippets
 
                     foreach (JObject contact in jResult["value"])
                     {
-                        string contactName = (string)contact["displayName"];
-                        contacts.Add(contactName);
-                        Debug.WriteLine("Got contact: " + contactName);
+                        string driveId = (string)contact["Id"];
+                        drives.Add(driveId);
+                        Debug.WriteLine("Got contact: " + driveId);
                     }
                 }
 
                 else
                 {
-                    Debug.WriteLine("We could not get contacts. The request returned this status code: " + response.StatusCode);
+                    Debug.WriteLine("We could not get drives. The request returned this status code: " + response.StatusCode);
                     return null;
                 }
 
-                return contacts;
+                return drives;
 
             }
 
             catch (Exception e)
             {
-                Debug.WriteLine("We could not get contacts: " + e.Message);
+                Debug.WriteLine("We could not get drives: " + e.Message);
                 return null;
             }
         }
