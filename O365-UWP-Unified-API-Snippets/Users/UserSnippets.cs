@@ -953,7 +953,7 @@ namespace O365_UWP_Unified_API_Snippets
                 // Build contents of post body and convert to StringContent object.
                 // Using line breaks for readability.
                 string postBody = "{'parentReference':{"
-                    + "'path':'" + serviceEndpoint + "/drive/root:'},"
+                    + "'path':'" + "/drive/root:'},"
                     + "'name':'" + copyFileName + "'}";
 
                 var copyBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
