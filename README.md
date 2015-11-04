@@ -68,7 +68,7 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 11.	Select the following permissions: 
 	* Read and write signed-in user's calendars
 	* Read signed-in user's contacts
-	* Read signed-in user's files
+	* Read and write signed-in user's files
 	* Send mail as signed-in user
 	* Read signed-in user's mail
 	* Read all users' full profiles
