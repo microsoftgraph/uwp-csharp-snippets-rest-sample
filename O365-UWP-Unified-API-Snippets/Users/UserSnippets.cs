@@ -295,7 +295,7 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
-                    createdEventId = (string)jResult["Id"];
+                    createdEventId = (string)jResult["id"];
                     Debug.WriteLine("Created event: " + createdEventId);
                 }
 
@@ -471,7 +471,7 @@ namespace O365_UWP_Unified_API_Snippets
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for sending mail from the current user's mailbox
-                Uri messageEndpoint = new Uri(serviceEndpoint + "me/SendMail");
+                Uri messageEndpoint = new Uri(serviceEndpoint + "me/microsoft.graph.sendmail");
 
 
                 string recipientJSON = "{'EmailAddress':{'Address':'" + RecipientAddress + "'}}";
@@ -629,7 +629,7 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
-                    currentUserPhotoId = (string)jResult["Id"];
+                    currentUserPhotoId = (string)jResult["id"];
                     Debug.WriteLine("Got user photo: " + currentUserPhotoId);
                 }
 
