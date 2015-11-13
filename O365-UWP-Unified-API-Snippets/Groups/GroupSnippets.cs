@@ -40,7 +40,7 @@ namespace O365_UWP_Unified_API_Snippets
 
                     foreach (JObject group in jResult["value"])
                     {
-                        string groupId = (string)group["objectId"];
+                        string groupId = (string)group["id"];
                         groups.Add(groupId);
                         Debug.WriteLine("Got group: " + groupId);
                     }
@@ -237,7 +237,7 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
-                    createdGroupId = (string)jResult["objectId"];
+                    createdGroupId = (string)jResult["id"];
                     Debug.WriteLine("Created group: " + createdGroupId);
                 }
 
