@@ -131,7 +131,7 @@ namespace O365_UWP_Unified_API_Snippets
                 string postBody = "{'accountEnabled':true,"
                                 + "'displayName':'User " + userName + "',"
                                 + "'mailNickName':'" + userName + "',"
-                                + "'passwordProfile': {'password': 'pass@word1','forceChangePasswordNextLogin': false },"
+                                + "'passwordProfile': {'password': 'pass@word1'},"
                                 + "'userPrincipalName':'" + userName + "@" + tenant + "'}";
 
                 var createBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
