@@ -131,13 +131,6 @@ namespace O365_UWP_Unified_API_Snippets
             return await UserSnippets.UpdateFileAsync(createdFileId, STORY_DATA_IDENTIFIER);
         }
 
-        public static async Task<bool> TryCopyFileAsync()
-        {
-            var copyFileName = Guid.NewGuid().ToString();
-            var createdFileId = await UserSnippets.CreateFileAsync(Guid.NewGuid().ToString(), STORY_DATA_IDENTIFIER);
-            return await UserSnippets.CopyFileAsync(createdFileId, copyFileName);
-        }
-
         public static async Task<bool> TryRenameFileAsync()
         {
             var newFileName = Guid.NewGuid().ToString();

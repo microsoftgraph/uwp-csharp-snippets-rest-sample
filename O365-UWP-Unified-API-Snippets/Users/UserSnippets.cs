@@ -935,55 +935,6 @@ namespace O365_UWP_Unified_API_Snippets
             return fileDeleted;
         }
 
-        // Copies a file in the user's root directory.
-        public static async Task<bool> CopyFileAsync(string fileId, string copyFileName)
-        {
-            bool fileCopied = false;
-
-            try
-            {
-
-                HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-
-                // Endpoint for the file to copy.
-                Uri fileEndpoint = new Uri(serviceEndpoint + "me/drive/items/" + fileId + "/microsoft.graph.copy");
-
-                // Build contents of post body and convert to StringContent object.
-                // Using line breaks for readability.
-                string postBody = "{'parentReference':{"
-                    + "'path':'" + "/drive/root:'},"
-                    + "'name':'" + copyFileName + "'}";
-
-                var copyBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await client.PostAsync(fileEndpoint, copyBody);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    fileCopied = true;
-                    Debug.WriteLine("Copied file Id: " + fileId);
-
-                }
-                else
-                {
-                    Debug.WriteLine("We could not copy the file. The request returned this status code: " + response.StatusCode);
-                    fileCopied = false;
-                }
-
-
-            }
-
-            catch (Exception e)
-            {
-                Debug.WriteLine("We could not copy the file. The request returned this status code: " + e.Message);
-                fileCopied = false;
-            }
-
-            return fileCopied;
-        }
-
         // Renames a file in the user's root directory.
         public static async Task<bool> RenameFileAsync(string fileId, string newFileName)
         {
@@ -1100,7 +1051,7 @@ namespace O365_UWP_Unified_API_Snippets
 
 //********************************************************* 
 // 
-//O365-UWP-Unified-API-Snippets, https://github.com/OfficeDev/O365-UWP-Unified-API-Snippets
+//O365-UWP-Microsoft-Graph-Snippets, https://github.com/OfficeDev/O365-UWP-Microsoft-Graph-Snippets
 //
 //Copyright (c) Microsoft Corporation
 //All rights reserved. 

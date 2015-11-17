@@ -71,7 +71,6 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Create Text File", RunStoryAsync = UserStories.TryCreateFileAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Download File", RunStoryAsync = UserStories.TryDownloadFileAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Update File", RunStoryAsync = UserStories.TryUpdateFileAsync });
-            StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Copy File", RunStoryAsync = UserStories.TryCopyFileAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Rename File", RunStoryAsync = UserStories.TryRenameFileAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Delete File", RunStoryAsync = UserStories.TryDeleteFileAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Create Folder", RunStoryAsync = UserStories.TryCreateFolderAsync });
