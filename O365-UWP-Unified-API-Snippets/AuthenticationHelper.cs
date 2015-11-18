@@ -26,7 +26,7 @@ namespace O365_UWP_Unified_API_Snippets
         static string authority = AADInstance + tenant;
 
         // Use "organizations" as your authority when you want the app to work on any Azure Tenant.
-        // static string authority = "organizations";
+        //static string authority = "organizations";
 
         // To authenticate to the unified API, the client needs to know its App ID URI.
         public const string ResourceUrl = "https://graph.microsoft.com/";
@@ -141,7 +141,7 @@ namespace O365_UWP_Unified_API_Snippets
 
 //********************************************************* 
 // 
-//O365-UWP-Unified-API-Snippets, https://github.com/OfficeDev/O365-UWP-Unified-API-Snippets
+//O365-UWP-Microsoft-Graph-Snippets, https://github.com/OfficeDev/O365-UWP-Microsoft-Graph-Snippets
 //
 //Copyright (c) Microsoft Corporation
 //All rights reserved. 
