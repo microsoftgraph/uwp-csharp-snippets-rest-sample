@@ -62,7 +62,7 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 7.	Click the arrow icon on the lower-right corner of the page.
 8.	On the **Application information** page, enter the redirect URI value that you obtained during the previous step.
 9.	Once the application is successfully added, you'll be taken to the **Quick Start** page for the application. From there, select **Configure** in the top menu.
-10.	Under **permissions to other applications**, select **Add application**. In the dialog box, select the **Microsoft Graph API** application. 
+10.	Under **permissions to other applications**, select **Add application**. In the dialog box, select the **Microsoft Graph** application. 
 11.	Select the following permissions: 
 	* Have full access to user calendars
 	* Send mail as a user
