@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,7 +14,7 @@ namespace O365_UWP_Unified_API_Snippets
 {
     class UserSnippets
     {
-        const string serviceEndpoint = "https://graph.microsoft.com/beta/";
+        const string serviceEndpoint = "https://graph.microsoft.com/v1.0/";
         static string tenant = App.Current.Resources["ida:Domain"].ToString();
 
         // Returns information about the signed-in user from Azure Active Directory.
@@ -83,12 +84,12 @@ namespace O365_UWP_Unified_API_Snippets
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
 
-                    foreach ( JObject user in jResult["value"])
+                    foreach (JObject user in jResult["value"])
                     {
                         string userName = (string)user["displayName"];
                         users.Add(userName);
                         Debug.WriteLine("Got user: " + userName);
-                    }                  
+                    }
                 }
 
                 else
@@ -127,10 +128,10 @@ namespace O365_UWP_Unified_API_Snippets
                 // Build contents of post body and convert to StringContent object.
                 // Using line breaks for readability.
 
-                string postBody = "{'accountEnabled':true," 
-                                + "'displayName':'User " + userName + "'," 
-                                + "'mailNickName':'" + userName + "'," 
-                                + "'passwordProfile': {'password': 'pass@word1','forceChangePasswordNextLogin': false }," 
+                string postBody = "{'accountEnabled':true,"
+                                + "'displayName':'User " + userName + "',"
+                                + "'mailNickName':'" + userName + "',"
+                                + "'passwordProfile': {'password': 'pass@word1'},"
                                 + "'userPrincipalName':'" + userName + "@" + tenant + "'}";
 
                 var createBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
@@ -175,7 +176,7 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all users in an organization
+                // Endpoint for the current user's drive
                 Uri usersEndpoint = new Uri(serviceEndpoint + "me/drive");
 
                 HttpResponseMessage response = await client.GetAsync(usersEndpoint);
@@ -221,8 +222,8 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all users in an organization
-                Uri usersEndpoint = new Uri(serviceEndpoint + "me/events?$select=id");
+                // Endpoint for the current user's events
+                Uri usersEndpoint = new Uri(serviceEndpoint + "me/events");
 
                 HttpResponseMessage response = await client.GetAsync(usersEndpoint);
 
@@ -253,7 +254,7 @@ namespace O365_UWP_Unified_API_Snippets
                 Debug.WriteLine("We could not get the current user's events: " + e.Message);
                 return null;
             }
- 
+
             return events;
         }
 
@@ -268,8 +269,8 @@ namespace O365_UWP_Unified_API_Snippets
                 HttpClient client = new HttpClient();
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                
-                // Endpoint for all users in an organization
+
+                // Endpoint for the current user's events
                 Uri eventsEndpoint = new Uri(serviceEndpoint + "me/events");
 
                 // Build contents of post body and convert to StringContent object.
@@ -282,8 +283,8 @@ namespace O365_UWP_Unified_API_Snippets
                 string postBody = "{'Subject':'Weekly Sync',"
                                 + "'Location':{'DisplayName':'Water Cooler'},"
                                 + "'Attendees':[{'Type':'Required','EmailAddress': {'Address':'mara@fabrikam.com'} }],"
-                                + "'Start':'" + new DateTimeOffset(new DateTime(2014, 12, 1, 9, 30, 0)).ToString("o") + "',"
-                                + "'End':'" + new DateTimeOffset(new DateTime(2014, 12, 1, 10, 0, 0)).ToString("o") + "',"
+                                + "'Start': {'DateTime': '" + new DateTime(2014, 12, 1, 9, 30, 0).ToString("o") + "', 'TimeZone':'UTC'},"
+                                + "'End': {'DateTime': '" + new DateTime(2014, 12, 1, 10, 0, 0).ToString("o") + "', 'TimeZone':'UTC'},"
                                 + "'Body':{'Content': 'Status updates, blocking issues, and next steps.', 'ContentType':'Text'}}";
 
                 var createBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
@@ -294,7 +295,7 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
-                    createdEventId = (string)jResult["Id"];
+                    createdEventId = (string)jResult["id"];
                     Debug.WriteLine("Created event: " + createdEventId);
                 }
 
@@ -327,7 +328,7 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all the specified event.
+                // Endpoint for the specified event.
                 Uri eventEndpoint = new Uri(serviceEndpoint + "me/events/" + eventId);
 
                 string updateBody = "{ 'Subject': 'Sync of the Week' }";
@@ -378,10 +379,10 @@ namespace O365_UWP_Unified_API_Snippets
                 // Endpoint for the specified event
                 Uri eventEndpoint = new Uri(serviceEndpoint + "me/events/" + eventId);
 
-                HttpResponseMessage response = await client.DeleteAsync(eventEndpoint);      
+                HttpResponseMessage response = await client.DeleteAsync(eventEndpoint);
 
                 if (response.IsSuccessStatusCode)
-                { 
+                {
                     eventDeleted = true;
                     Debug.WriteLine("Deleted event: " + eventId);
                 }
@@ -416,7 +417,7 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all messages in an organization
+                // Endpoint for all messages in the current user's mailbox
                 Uri messagesEndpoint = new Uri(serviceEndpoint + "me/messages");
 
                 HttpResponseMessage response = await client.GetAsync(messagesEndpoint);
@@ -469,8 +470,8 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all messages in an organization
-                Uri messageEndpoint = new Uri(serviceEndpoint + "me/SendMail");
+                // Endpoint for sending mail from the current user's mailbox
+                Uri messageEndpoint = new Uri(serviceEndpoint + "me/microsoft.graph.sendmail");
 
 
                 string recipientJSON = "{'EmailAddress':{'Address':'" + RecipientAddress + "'}}";
@@ -524,7 +525,7 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all users in an organization
+                // Endpoint for the current user's manager
                 Uri managerEndpoint = new Uri(serviceEndpoint + "me/manager");
 
                 HttpResponseMessage response = await client.GetAsync(managerEndpoint);
@@ -569,7 +570,7 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all users in an organization
+                // Endpoint for the current user's direct reports
                 Uri directsEndpoint = new Uri(serviceEndpoint + "me/directReports");
 
                 HttpResponseMessage response = await client.GetAsync(directsEndpoint);
@@ -619,8 +620,8 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all users in an organization
-                Uri photoEndpoint = new Uri(serviceEndpoint + "me/userPhoto");
+                // Endpoint for the current user's photo
+                Uri photoEndpoint = new Uri(serviceEndpoint + "me/photo");
 
                 HttpResponseMessage response = await client.GetAsync(photoEndpoint);
 
@@ -628,7 +629,7 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
-                    currentUserPhotoId = (string)jResult["Id"];
+                    currentUserPhotoId = (string)jResult["id"];
                     Debug.WriteLine("Got user photo: " + currentUserPhotoId);
                 }
 
@@ -664,7 +665,7 @@ namespace O365_UWP_Unified_API_Snippets
                 var token = await AuthenticationHelper.GetTokenHelperAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                // Endpoint for all users in an organization
+                // Endpoint for the current user's groups
                 Uri memberOfEndpoint = new Uri(serviceEndpoint + "me/memberOf");
 
                 HttpResponseMessage response = await client.GetAsync(memberOfEndpoint);
@@ -701,12 +702,356 @@ namespace O365_UWP_Unified_API_Snippets
 
         }
 
+
+        public static async Task<List<string>> GetCurrentUserFilesAsync()
+        {
+            var files = new List<string>();
+            JObject jResult = null;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for all files and folders for a user
+                Uri filesEndpoint = new Uri(serviceEndpoint + "me/drive/root/children");
+
+                HttpResponseMessage response = await client.GetAsync(filesEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    jResult = JObject.Parse(responseContent);
+
+                    foreach (JObject file in jResult["value"])
+                    {
+                        string fileName = (string)file["name"];
+                        files.Add(fileName);
+                        Debug.WriteLine("Got file: " + fileName);
+                    }
+                }
+
+                else
+                {
+                    Debug.WriteLine("We could not get user files. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+                return files;
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not get user files: " + e.Message);
+                return null;
+            }
+
+
+        }
+
+        // Creates a text file in the user's root directory.
+        public static async Task<string> CreateFileAsync(string fileName, string fileContent)
+        {
+            string createdFileId = null;
+            JObject jResult = null;
+
+            try
+            {
+
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                var fileContentPostBody = new StringContent(fileContent, System.Text.Encoding.UTF8, "text/plain");
+
+                // Endpoint for content in an existing file.
+                Uri fileEndpoint = new Uri(serviceEndpoint + "me/drive/root/children/" + fileName + "/content");
+
+                var requestMessage = new HttpRequestMessage(HttpMethod.Put, fileEndpoint)
+                {
+                    Content = fileContentPostBody
+                };
+
+
+                HttpResponseMessage response = await client.SendAsync(requestMessage);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    jResult = JObject.Parse(responseContent);
+                    createdFileId = (string)jResult["id"];
+                    Debug.WriteLine("Created file Id: " + createdFileId);
+
+
+                }
+                else
+                {
+                    Debug.WriteLine("We could not create the file. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not create the file. The request returned this status code: " + e.Message);
+                return null;
+            }
+
+            return createdFileId;
+        }
+
+        // Downloads the content of an existing file.
+        public static async Task<Stream> DownloadFileAsync(string fileId)
+        {
+            Stream fileContent = null;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for content in an existing file. Use "/me/drive/root/children/<file name>/content" if you know the name but not the Id.
+                Uri fileEndpoint = new Uri(serviceEndpoint + "me/drive/items/" + fileId + "/content");
+
+                HttpResponseMessage response = await client.GetAsync(fileEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    fileContent = await response.Content.ReadAsStreamAsync();
+                    Debug.WriteLine("Downloaded file: " + fileId);
+
+
+                }
+                else
+                {
+                    Debug.WriteLine("We could not download the file. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not download the file. The request returned this status code: " + e.Message);
+                return null;
+            }
+
+            return fileContent;
+        }
+
+        // Adds content to a file in the user's root directory.
+        public static async Task<bool> UpdateFileAsync(string fileId, string fileContent)
+        {
+            bool fileUpdated = false;
+
+            try
+            {
+
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                var fileContentPostBody = new StringContent(fileContent, System.Text.Encoding.UTF8, "text/plain");
+
+                // Endpoint for content in an existing file. Use "/me/drive/root/children/<file name>/content" if you know the name but not the Id.
+                Uri fileEndpoint = new Uri(serviceEndpoint + "me/drive/items/" + fileId + "/content");
+
+                var requestMessage = new HttpRequestMessage(HttpMethod.Put, fileEndpoint)
+                {
+                    Content = fileContentPostBody
+                };
+
+
+                HttpResponseMessage response = await client.SendAsync(requestMessage);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    fileUpdated = true;
+                    Debug.WriteLine("Updated file Id: " + fileId);
+
+                }
+                else
+                {
+                    Debug.WriteLine("We could not update the file. The request returned this status code: " + response.StatusCode);
+                    fileUpdated = false;
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not update the file. The request returned this status code: " + e.Message);
+                fileUpdated = false;
+            }
+
+            return fileUpdated;
+        }
+
+        // Deletes a file in the user's root directory.
+        public static async Task<bool> DeleteFileAsync(string fileId)
+        {
+            bool fileDeleted = false;
+
+            try
+            {
+
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for the file to delete.
+                Uri fileEndpoint = new Uri(serviceEndpoint + "me/drive/items/" + fileId);
+
+                HttpResponseMessage response = await client.DeleteAsync(fileEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    fileDeleted = true;
+                    Debug.WriteLine("Deleted file Id: " + fileId);
+
+                }
+                else
+                {
+                    Debug.WriteLine("We could not delete the file. The request returned this status code: " + response.StatusCode);
+                    fileDeleted = false;
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not delete the file. The request returned this status code: " + e.Message);
+                fileDeleted = false;
+            }
+
+            return fileDeleted;
+        }
+
+        // Renames a file in the user's root directory.
+        public static async Task<bool> RenameFileAsync(string fileId, string newFileName)
+        {
+            bool fileCopied = false;
+
+            try
+            {
+
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for the file to rename.
+                Uri fileEndpoint = new Uri(serviceEndpoint + "me/drive/items/" + fileId);
+
+                // Build contents of post body and convert to StringContent object.
+                // Using line breaks for readability.
+                string patchBody = "{"
+                    + "'name':'" + newFileName + "'}";
+
+                var copyBody = new StringContent(patchBody, System.Text.Encoding.UTF8, "application/json");
+
+                var method = new HttpMethod("PATCH");
+
+                var requestMessage = new HttpRequestMessage(method, fileEndpoint)
+                {
+                    Content = copyBody
+                };
+
+                HttpResponseMessage response = await client.SendAsync(requestMessage);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    fileCopied = true;
+                    Debug.WriteLine("Renamed file Id: " + fileId);
+
+                }
+                else
+                {
+                    Debug.WriteLine("We could not rename the file. The request returned this status code: " + response.StatusCode);
+                    fileCopied = false;
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not rename the file. The request returned this status code: " + e.Message);
+                fileCopied = false;
+            }
+
+            return fileCopied;
+        }
+
+
+        // Creates a folder in the user's root directory.
+        public static async Task<string> CreateFolderAsync(string folderName)
+        {
+            string createFolderId = null;
+            JObject jResult = null;
+
+            try
+            {
+
+                HttpClient client = new HttpClient();
+                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                // Endpoint for all files and folders for a user
+                Uri foldersEndpoint = new Uri(serviceEndpoint + "me/drive/root/children");
+
+                var folderMetadata = "{"
+                    + "'name': '" + folderName + "',"
+                    + "'folder': {},"
+                    + "'@name.conflictBehavior': 'rename'"
+                    + "}"
+                    ;
+
+
+                var folderMetadataPostBody = new StringContent(folderMetadata, System.Text.Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync(foldersEndpoint, folderMetadataPostBody);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    jResult = JObject.Parse(responseContent);
+                    createFolderId = (string)jResult["id"];
+                    Debug.WriteLine("Created folder Id: " + createFolderId);
+
+
+                }
+                else
+                {
+                    Debug.WriteLine("We could not create the folder. The request returned this status code: " + response.StatusCode);
+                    return null;
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine("We could not create the folder. The request returned this status code: " + e.Message);
+                return null;
+            }
+
+            return createFolderId;
+        }
+
     }
 }
 
 //********************************************************* 
 // 
-//O365-UWP-Unified-API-Snippets, https://github.com/OfficeDev/O365-UWP-Unified-API-Snippets
+//O365-UWP-Microsoft-Graph-Snippets, https://github.com/OfficeDev/O365-UWP-Microsoft-Graph-Snippets
 //
 //Copyright (c) Microsoft Corporation
 //All rights reserved. 

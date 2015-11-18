@@ -13,7 +13,7 @@ namespace O365_UWP_Unified_API_Snippets
 {
     class GroupSnippets
     {
-        const string serviceEndpoint = "https://graph.microsoft.com/beta/";
+        const string serviceEndpoint = "https://graph.microsoft.com/v1.0/";
         static string tenant = App.Current.Resources["ida:Domain"].ToString();
 
         // Returns all of the groups in your tenant's directory.
@@ -40,7 +40,7 @@ namespace O365_UWP_Unified_API_Snippets
 
                     foreach (JObject group in jResult["value"])
                     {
-                        string groupId = (string)group["objectId"];
+                        string groupId = (string)group["id"];
                         groups.Add(groupId);
                         Debug.WriteLine("Got group: " + groupId);
                     }
@@ -237,7 +237,7 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     jResult = JObject.Parse(responseContent);
-                    createdGroupId = (string)jResult["objectId"];
+                    createdGroupId = (string)jResult["id"];
                     Debug.WriteLine("Created group: " + createdGroupId);
                 }
 
@@ -355,7 +355,7 @@ namespace O365_UWP_Unified_API_Snippets
 
 //********************************************************* 
 // 
-//O365-UWP-Unified-API-Snippets, https://github.com/OfficeDev/O365-UWP-Unified-API-Snippets
+//O365-UWP-Microsoft-Graph-Snippets, https://github.com/OfficeDev/O365-UWP-Microsoft-Graph-Snippets
 //
 //Copyright (c) Microsoft Corporation
 //All rights reserved. 

@@ -97,8 +97,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AuthenticationHelper.cs" />
-    <Compile Include="Contacts\ContactsSnippets.cs" />
-    <Compile Include="Contacts\ContactsStories.cs" />
+    <Compile Include="Contacts\OrganizationSnippets.cs" />
+    <Compile Include="Contacts\OrganizationStories.cs" />
     <Compile Include="Groups\GroupStories.cs" />
     <Compile Include="Groups\GroupSnippets.cs" />
     <Compile Include="MainPage.xaml.cs">

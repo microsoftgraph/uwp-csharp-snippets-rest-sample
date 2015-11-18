@@ -9,13 +9,13 @@ using Windows.Storage;
 
 namespace O365_UWP_Unified_API_Snippets
 {
-    class ContactsStories
+    class OrganizationStories
     {
 
-        public static async Task<bool> TryGetContactsAsync()
+        public static async Task<bool> TryGetDrivesAsync()
         {
-            var groups = await ContactsSnippets.GetContactsAsync();
-            return groups != null;
+            var drives = await OrganizationSnippets.GetDrivesAsync();
+            return drives != null;
         }
 
     }
@@ -23,7 +23,7 @@ namespace O365_UWP_Unified_API_Snippets
 
 //********************************************************* 
 // 
-//O365-UWP-Unified-API-Snippets, https://github.com/OfficeDev/O365-UWP-Unified-API-Snippets
+//O365-UWP-Microsoft-Graph-Snippets, https://github.com/OfficeDev/O365-UWP-Microsoft-Graph-Snippets
 //
 //Copyright (c) Microsoft Corporation
 //All rights reserved. 
