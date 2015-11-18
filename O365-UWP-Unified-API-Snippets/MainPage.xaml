@@ -63,7 +63,7 @@
     <Page.TopAppBar>
         <CommandBar HorizontalAlignment="Center">
             <CommandBar.Content>
-                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="appTitle" Text="Unified API Snippets"
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="appTitle" Text="Microsoft Graph Snippets"
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
                        TextWrapping="Wrap"
