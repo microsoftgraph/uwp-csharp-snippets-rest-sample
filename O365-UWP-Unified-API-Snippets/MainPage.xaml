@@ -48,7 +48,7 @@
 
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid GroupPadding="0,0,48,0">
+                        <ItemsWrapGrid GroupPadding="0,0,48,0" Orientation="Horizontal">
 
                         </ItemsWrapGrid>
                     </ItemsPanelTemplate>
