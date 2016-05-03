@@ -429,7 +429,7 @@ namespace O365_UWP_Unified_API_Snippets
 
                     foreach (JObject user in jResult["value"])
                     {
-                        string subject = (string)user["Subject"];
+                        string subject = (string)user["subject"];
                         messages.Add(subject);
                         Debug.WriteLine("Got message: " + subject);
                     }
