@@ -92,6 +92,13 @@ ms-appx-web://Microsoft.AAD.BrokerPlugIn/S-1-15-2-694665007-945573255-503870805-
 ##How the sample affects your tenant data
 This sample runs REST commands that create, read, update, or delete data. When running commands that delete or edit data, the sample creates fake entities. The fake entities are deleted or edited so that your actual tenant data is unaffected. The sample will leave behind fake entities on your tenant.
 
+<a name="contributing"></a>
+## Contributing ##
+
+If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.md).
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 <a name="questions"></a>
 ## Questions and comments
 
