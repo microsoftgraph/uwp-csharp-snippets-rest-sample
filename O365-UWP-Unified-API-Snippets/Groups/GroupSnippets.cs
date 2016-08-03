@@ -14,7 +14,6 @@ namespace O365_UWP_Unified_API_Snippets
     class GroupSnippets
     {
         const string serviceEndpoint = "https://graph.microsoft.com/v1.0/";
-        static string tenant = App.Current.Resources["ida:Domain"].ToString();
 
         // Returns all of the groups in your tenant's directory.
         public static async Task<List<string>> GetGroupsAsync()
@@ -25,7 +24,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all groups in the tenant
@@ -74,7 +73,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the specified group
@@ -117,7 +116,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all members of the specified group
@@ -165,7 +164,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all owners of the specified group
@@ -214,7 +213,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all groups in an organization
@@ -268,13 +267,13 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all the specified group.
                 Uri groupEndpoint = new Uri(serviceEndpoint + "myOrganization/groups/" + groupId);
 
-                string updateBody = "{ 'Description': 'This is a group in the " + tenant + "tenant' }";
+                string updateBody = "{ 'Description': 'This is an updated group group.' }";
                 var patchBody = new StringContent(updateBody, System.Text.Encoding.UTF8, "application/json");
 
                 // Construct HTTP PATCH request
@@ -317,7 +316,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the specified group

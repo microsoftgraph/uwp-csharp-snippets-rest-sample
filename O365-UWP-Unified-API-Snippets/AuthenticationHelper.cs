@@ -10,111 +10,78 @@ using Windows.Security.Authentication.Web;
 using Windows.Security.Authentication.Web.Core;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Microsoft.Identity.Client;
 
 namespace O365_UWP_Unified_API_Snippets
 {
-    internal static class AuthenticationHelper
+    public class AuthenticationHelper
     {
-        // The Client ID is used by the application to uniquely identify itself to Microsoft Azure Active Directory (AD).
+        // The Client ID is used by the application to uniquely identify itself to the v2.0 authentication endpoint.
         static string clientId = App.Current.Resources["ida:ClientID"].ToString();
 
-        // You'll create your tenant-specific authority from the tenant domain and AADInstance URI
-        static string tenant = App.Current.Resources["ida:Domain"].ToString();
-        static string AADInstance = App.Current.Resources["ida:AADInstance"].ToString();
+        public static PublicClientApplication IdentityClientApp = new PublicClientApplication(clientId);
 
-        //Use the domain-specific authority when you're authenticating users from a single tenant only.
-        static string authority = AADInstance + tenant;
-
-        // Use "organizations" as your authority when you want the app to work on any Azure Tenant.
-        //static string authority = "organizations";
-
-        // To authenticate to Microsoft Graph, the client needs to know its App ID URI.
-        public const string ResourceUrl = "https://graph.microsoft.com/";
-
-        private static WebAccountProvider aadAccountProvider = null;
-        private static WebAccount userAccount = null;
-
-        // Store account-specific settings so that the app can remember that a user has already signed in.
+        public static string TokenForUser = null;
+        public static DateTimeOffset Expiration;
         public static ApplicationDataContainer _settings = ApplicationData.Current.RoamingSettings;
 
-
-
-        // Get an access token for the given context and resourceId. An attempt is first made to 
-        // acquire the token silently. If that fails, then we try to acquire the token by prompting the user.
-        public static async Task<string> GetTokenHelperAsync()
+        /// <summary>
+        /// Get Token for User.
+        /// </summary>
+        /// <returns>Token for user.</returns>
+        public static async Task<string> GetTokenForUserAsync()
         {
+            AuthenticationResult authResult;
+            var scopes = new string[]
+   
+             {
+                            "https://graph.microsoft.com/User.Read",
+                            "https://graph.microsoft.com/User.ReadWrite",
+                            "https://graph.microsoft.com/User.ReadBasic.All",
+                            "https://graph.microsoft.com/Mail.Send",
+                            "https://graph.microsoft.com/Calendars.ReadWrite",
+                            "https://graph.microsoft.com/Mail.ReadWrite",
+                            "https://graph.microsoft.com/Files.ReadWrite",
 
-            string token = null;
+                 // Admin-only scopes. Uncomment these if you're running the sample with an admin work account.
+                 // You won't be able to sign in with a non-admin work account if you request these scopes.
+                 // These scopes will be ignored if you leave them uncommented and run the sample with a consumer account.
+                 // See the MainPage.xaml.cs file for all of the operations that won't work if you're not running the 
+                 // sample with an admin work account.
+                 //"https://graph.microsoft.com/Directory.AccessAsUser.All",
+                 //"https://graph.microsoft.com/User.ReadWrite.All",
+                 //"https://graph.microsoft.com/Group.ReadWrite.All"
 
-            aadAccountProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync("https://login.microsoft.com", authority);
 
-            // Check if there's a record of the last account used with the app.
-            var userID = _settings.Values["userID"];
+             };
 
-            if (userID != null)
+            try
             {
-
-                WebTokenRequest webTokenRequest = new WebTokenRequest(aadAccountProvider, string.Empty, clientId);
-                webTokenRequest.Properties.Add("resource", ResourceUrl);
-
-                // Get an account object for the user.
-                userAccount = await WebAuthenticationCoreManager.FindAccountAsync(aadAccountProvider, (string)userID);
-
-
-                // Ensure that the saved account works for getting the token we need.
-                WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest, userAccount);
-                if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success || webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.AccountSwitch)
-                {
-                    WebTokenResponse webTokenResponse = webTokenRequestResult.ResponseData[0];
-                    userAccount = webTokenResponse.WebAccount;
-                    token = webTokenResponse.Token;
-
-                }
-                else
-                {
-                    // The saved account could not be used for getting a token.
-                    // Make sure that the UX is ready for a new sign in.
-                    SignOut();
-                }
-
+                authResult = await IdentityClientApp.AcquireTokenSilentAsync(scopes);
+                TokenForUser = authResult.Token;
+                // save user ID in local storage
+                _settings.Values["userID"] = authResult.User.UniqueId;
+                _settings.Values["userEmail"] = authResult.User.DisplayableId;
+                _settings.Values["userName"] = authResult.User.Name;
             }
-            else
+
+            catch (Exception)
             {
-                // There is no recorded user. Start a sign-in flow without imposing a specific account.
-
-                WebTokenRequest webTokenRequest = new WebTokenRequest(aadAccountProvider, string.Empty, clientId, WebTokenRequestPromptType.ForceAuthentication);
-                webTokenRequest.Properties.Add("resource", ResourceUrl);
-
-                WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest);
-                if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success)
+                if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
                 {
-                    WebTokenResponse webTokenResponse = webTokenRequestResult.ResponseData[0];
-                    userAccount = webTokenResponse.WebAccount;
-                    token = webTokenResponse.Token;
+                    authResult = await IdentityClientApp.AcquireTokenAsync(scopes);
 
+                    TokenForUser = authResult.Token;
+                    Expiration = authResult.ExpiresOn;
+
+                    // save user ID in local storage
+                    _settings.Values["userID"] = authResult.User.UniqueId;
+                    _settings.Values["userEmail"] = authResult.User.DisplayableId;
+                    _settings.Values["userName"] = authResult.User.Name;
                 }
             }
 
-            // We succeeded in getting a valid user.
-            if (userAccount != null)
-            {
-                // Save user ID in local storage.
-                _settings.Values["userID"] = userAccount.Id;
-                _settings.Values["userEmail"] = userAccount.UserName;
-                _settings.Values["userName"] = userAccount.Properties["DisplayName"];
-
-                return token;
-            }
-
-            // We didn't succeed in getting a valid user. Clear the app settings so that another user can sign in.
-            else
-            {
-
-                SignOut();
-                return null;
-            }
-
-
+            return TokenForUser;
         }
 
         /// <summary>
@@ -122,18 +89,18 @@ namespace O365_UWP_Unified_API_Snippets
         /// </summary>
         public static void SignOut()
         {
+            foreach (var user in IdentityClientApp.Users)
+            {
+                user.SignOut();
+            }
+
+            TokenForUser = null;
+
             //Clear stored values from last authentication.
             _settings.Values["userID"] = null;
             _settings.Values["userEmail"] = null;
             _settings.Values["userName"] = null;
 
-        }
-
-        public static string GetAppRedirectURI()
-        {
-            // Windows 10 universal apps require redirect URI in the format below. Add a breakpoint to this line, and run the app before you register it so that
-            // you can supply the correct redirect URI value.
-            return string.Format("ms-appx-web://microsoft.aad.brokerplugin/{0}", WebAuthenticationBroker.GetCurrentApplicationCallbackUri().Host).ToUpper();
         }
 
     }

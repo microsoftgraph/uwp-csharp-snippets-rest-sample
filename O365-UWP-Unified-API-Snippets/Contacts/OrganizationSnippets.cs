@@ -25,7 +25,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all contacts in your organization

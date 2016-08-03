@@ -9,13 +9,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace O365_UWP_Unified_API_Snippets
 {
     class UserSnippets
     {
         const string serviceEndpoint = "https://graph.microsoft.com/v1.0/";
-        static string tenant = App.Current.Resources["ida:Domain"].ToString();
+        public static ApplicationDataContainer _settings = ApplicationData.Current.RoamingSettings;
 
         // Returns information about the signed-in user from Azure Active Directory.
         public static async Task<string> GetMeAsync()
@@ -26,7 +27,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all users in an organization
@@ -71,7 +72,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all users in an organization
@@ -116,10 +117,16 @@ namespace O365_UWP_Unified_API_Snippets
         {
             JObject jResult = null;
             string createdUserName = null;
+
+            // Get email domain from current user's email address.
+            string currentUserEmail = (string)_settings.Values["userEmail"];
+            string[] splitString = currentUserEmail.Split('@');
+            string emailDomain = splitString[1];
+
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all users in an organization
@@ -132,7 +139,7 @@ namespace O365_UWP_Unified_API_Snippets
                                 + "'displayName':'User " + userName + "',"
                                 + "'mailNickName':'" + userName + "',"
                                 + "'passwordProfile': {'password': 'pass@word1'},"
-                                + "'userPrincipalName':'" + userName + "@" + tenant + "'}";
+                                + "'userPrincipalName':'" + userName + "@" + emailDomain + "'}";
 
                 var createBody = new StringContent(postBody, System.Text.Encoding.UTF8, "application/json");
 
@@ -173,7 +180,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's drive
@@ -219,7 +226,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's events
@@ -267,7 +274,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's events
@@ -325,7 +332,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the specified event.
@@ -373,7 +380,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the specified event
@@ -414,7 +421,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all messages in the current user's mailbox
@@ -467,7 +474,7 @@ namespace O365_UWP_Unified_API_Snippets
             {
 
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for sending mail from the current user's mailbox
@@ -522,7 +529,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's manager
@@ -567,7 +574,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's direct reports
@@ -617,7 +624,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's photo
@@ -662,7 +669,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the current user's groups
@@ -711,7 +718,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all files and folders for a user
@@ -761,7 +768,7 @@ namespace O365_UWP_Unified_API_Snippets
             {
 
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 var fileContentPostBody = new StringContent(fileContent, System.Text.Encoding.UTF8, "text/plain");
@@ -812,7 +819,7 @@ namespace O365_UWP_Unified_API_Snippets
             try
             {
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for content in an existing file. Use "/me/drive/root/children/<file name>/content" if you know the name but not the Id.
@@ -854,7 +861,7 @@ namespace O365_UWP_Unified_API_Snippets
             {
 
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 var fileContentPostBody = new StringContent(fileContent, System.Text.Encoding.UTF8, "text/plain");
@@ -903,7 +910,7 @@ namespace O365_UWP_Unified_API_Snippets
             {
 
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the file to delete.
@@ -944,7 +951,7 @@ namespace O365_UWP_Unified_API_Snippets
             {
 
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for the file to rename.
@@ -1001,7 +1008,7 @@ namespace O365_UWP_Unified_API_Snippets
             {
 
                 HttpClient client = new HttpClient();
-                var token = await AuthenticationHelper.GetTokenHelperAsync();
+                var token = await AuthenticationHelper.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 // Endpoint for all files and folders for a user
