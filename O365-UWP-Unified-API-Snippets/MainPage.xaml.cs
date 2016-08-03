@@ -156,20 +156,6 @@ namespace O365_UWP_Unified_API_Snippets
             AuthenticationHelper.SignOut();
             StoryGrid.SelectedItems.Clear();
         }
-
-        private async void CopyRedirectUriToClipboard_Click(object sender, RoutedEventArgs e)
-        {
-            var redirectURI = AuthenticationHelper.GetAppRedirectURI();
-
-            var dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
-            dataPackage.SetText(redirectURI);
-            Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
-            Windows.ApplicationModel.DataTransfer.Clipboard.Flush();
-
-            var dialog = new Windows.UI.Popups.MessageDialog(redirectURI, "App Redirect URI copied to clipboard");
-            await dialog.ShowAsync();
-
-        }
     }
 }
 

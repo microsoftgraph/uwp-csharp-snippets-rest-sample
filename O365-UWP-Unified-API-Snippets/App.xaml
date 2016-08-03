@@ -10,10 +10,7 @@
     <Application.Resources>
         <!-- Add your client id here. -->
         <x:String x:Key="ida:ClientID"></x:String>
-        <x:String x:Key="ida:AADInstance">https://login.microsoftonline.com/</x:String>
-        <!-- Add your developer tenant domain here. -->
-        <x:String x:Key="ida:Domain">yourtenant.onmicrosoft.com</x:String>
-
+        <x:String x:Key="ida:ReturnUrl">urn:ietf:wg:oauth:2.0:oob</x:String>
     </Application.Resources>
 
 
