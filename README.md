@@ -1,4 +1,4 @@
-# Office 365 Snippets Sample for UWP Using Microsoft Graph
+# Microsoft Graph UWP Snippets Sample (REST)
 
 **Table of contents**
 
