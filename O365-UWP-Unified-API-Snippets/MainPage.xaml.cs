@@ -91,6 +91,15 @@ namespace O365_UWP_Unified_API_Snippets
 
             StoryCollection.Add(new StoryDefinition() { GroupName = "Organization", Title = "Get Org Drives", RunStoryAsync = OrganizationStories.TryGetDrivesAsync });
 
+            //Extensions stories
+
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Set Open Extension", RunStoryAsync = ExtensionStories.TrySetOpenExtension});
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Get Open Extension", RunStoryAsync = ExtensionStories.TryGetOpenExtension });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Register Schema Extension", RunStoryAsync = ExtensionStories.TryRegisterSchemaExtension });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Get Schema Extension", RunStoryAsync = ExtensionStories.TryGetSchemaExtension });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Set Schema Extension Value", RunStoryAsync = ExtensionStories.TrySetSchemaExtensionValue });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Get Schema Extension Value", RunStoryAsync = ExtensionStories.TryGetSchemaExtensionValue });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Delete Schema Extension", RunStoryAsync = ExtensionStories.TryDeleteSchemaExtension });
 
             var result = from story in StoryCollection group story by story.GroupName into api orderby api.Key select api;
             StoriesByApi.Source = result;
