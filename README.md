@@ -62,7 +62,7 @@ This sample runs REST commands that create, read, update, or delete data. When r
 
 <a name="extensions-snippets"></a>
 ##How to run the extensions snippets
-This sample contains snippets that show you how to work with open extensions. This feature is currently in preview.
+This sample contains snippets that show you how to work with [custom extensions](https://dev.office.com/blogs/adding-customer-data-to-resources-in-Microsoft-Graph-preview). This feature is currently in preview.
 
 These snippets require the admin-only **AccessAsUser.All** scope, so in order to run them you'll need to uncomment that scope string in the `AuthenticationHelper.cs` file.
 
