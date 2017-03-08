@@ -17,7 +17,10 @@ namespace O365_UWP_Unified_API_Snippets
     class ExtensionSnippets
     {
         const string serviceEndpoint = "https://graph.microsoft.com/beta";
-        const string domainName = "adatumisv";
+
+        // These snippets require you to supply the name of a verified domain on your tenant.
+        // You won't be able to run these snippets without a verified domain.
+        const string domainName = "your verified domain";
 
         internal static async Task<string> GetOpenExtensionsAsync()
         {

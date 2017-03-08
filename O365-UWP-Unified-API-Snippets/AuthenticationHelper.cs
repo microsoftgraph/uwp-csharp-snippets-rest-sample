@@ -42,7 +42,6 @@ namespace O365_UWP_Unified_API_Snippets
                 "https://graph.microsoft.com/Calendars.ReadWrite",
                 "https://graph.microsoft.com/Mail.ReadWrite",
                 "https://graph.microsoft.com/Files.ReadWrite",
-                "https://graph.microsoft.com/Directory.AccessAsUser.All",
 
                  // Admin-only scopes. Uncomment these if you're running the sample with an admin work account.
                  // You won't be able to sign in with a non-admin work account if you request these scopes.
@@ -50,7 +49,8 @@ namespace O365_UWP_Unified_API_Snippets
                  // See the MainPage.xaml.cs file for all of the operations that won't work if you're not running the 
                  // sample with an admin work account.
                  //"https://graph.microsoft.com/User.ReadWrite.All",
-                 //"https://graph.microsoft.com/Group.ReadWrite.All"
+                 //"https://graph.microsoft.com/Group.ReadWrite.All",
+                 //"https://graph.microsoft.com/Directory.AccessAsUser.All"
              };
 
             try

@@ -7,13 +7,14 @@
 * [Register and configure the app](#register)
 * [Build and debug](#build)
 * [How the sample affects your tenant data](#how-the-sample-affects-your-tenant-data)
+* [How to run the extensions snippets](#extensions-snippets)
 * [Questions and comments](#questions)
 * [Additional resources](#additional-resources)
 
 <a name="introduction"></a>
 ##Introduction
 
-This sample shows how to use the Microsoft Graph API (previously called Office 365 unified API) to send email, manage groups, and perform other activities with Office 365 data.
+This sample shows how to use the Microsoft Graph API to send email, manage groups, and perform other activities with Office 365 data.
 Microsoft Graph exposes multiple APIs from Microsoft cloud services through a single REST API endpoint. This repository shows you how to access multiple resources, including Microsoft Azure Active Directory (AD) and the Office 365 APIs, by making HTTP requests to the Microsoft Graph API in a Windows 10 universal app. 
 
 
@@ -59,6 +60,16 @@ This sample requires the following:
 ##How the sample affects your tenant data
 This sample runs REST commands that create, read, update, or delete data. When running commands that delete or edit data, the sample creates fake entities. The fake entities are deleted or edited so that your actual tenant data is unaffected. The sample will leave behind fake entities on your tenant.
 
+<a name="extensions-snippets"></a>
+##How to run the extensions snippets
+This sample contains snippets that show you how to work with open extensions. This feature is currently in preview.
+
+These snippets require the admin-only **AccessAsUser.All** scope, so in order to run them you'll need to uncomment that scope string in the `AuthenticationHelper.cs` file.
+
+Additionally, these snippets will run only on a tenant that has a verified domain. You specify the name of this domain by making it the value of the `domainName` string in the `ExtensionSnippets.cs` file:
+
+	const string domainName = "your verified domain";
+
 <a name="contributing"></a>
 ## Contributing ##
 
@@ -85,6 +96,6 @@ Your feedback is important to us. Connect with us on [Stack Overflow](http://sta
 
 
 ## Copyright
-Copyright (c) 2016 Microsoft. All rights reserved.
+Copyright (c) 2017 Microsoft. All rights reserved.
 
 
