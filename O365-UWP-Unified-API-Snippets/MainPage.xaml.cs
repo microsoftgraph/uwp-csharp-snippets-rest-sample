@@ -48,9 +48,6 @@ namespace O365_UWP_Unified_API_Snippets
         {
             StoryCollection = new List<StoryDefinition>();
 
-            // These stories require your app to have permission to access your organization's directory. 
-            // Comment them if you're not going to run the app with that permission level.
-
             // User stories
 
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Get Me", RunStoryAsync = UserStories.TryGetMeAsync });
@@ -75,6 +72,8 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Delete File", RunStoryAsync = UserStories.TryDeleteFileAsync });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Users", Title = "Create Folder", RunStoryAsync = UserStories.TryCreateFolderAsync });
 
+            // The following stories require your app to have permission to access your organization's directory. 
+            // Comment them if you're not going to run the app with that permission level.
 
             // Group stories
 
@@ -91,7 +90,9 @@ namespace O365_UWP_Unified_API_Snippets
 
             StoryCollection.Add(new StoryDefinition() { GroupName = "Organization", Title = "Get Org Drives", RunStoryAsync = OrganizationStories.TryGetDrivesAsync });
 
-            //Extensions stories
+            // The Extensions stories require the admin-only AccessAsUser.All scope. Only admins can run these.
+            // Uncomment that scope in AuthenticationHelper.cs if you want to run these.
+            // Extensions stories
 
             StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Set Open Extension", RunStoryAsync = ExtensionStories.TrySetOpenExtension});
             StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Get Open Extension", RunStoryAsync = ExtensionStories.TryGetOpenExtension });
