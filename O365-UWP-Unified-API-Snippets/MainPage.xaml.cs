@@ -102,6 +102,10 @@ namespace O365_UWP_Unified_API_Snippets
             StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Get Schema Extension Value", RunStoryAsync = ExtensionStories.TryGetSchemaExtensionValue });
             StoryCollection.Add(new StoryDefinition() { GroupName = "Extensions", Title = "Delete Schema Extension", RunStoryAsync = ExtensionStories.TryDeleteSchemaExtension });
 
+            // Batching stories
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Batching", Title = "Parallel batch", RunStoryAsync = BatchingStories.TryRunParallelBatch });
+            StoryCollection.Add(new StoryDefinition() { GroupName = "Batching", Title = "Sequential batch", RunStoryAsync = BatchingStories.TryRunSequentialBatch });
+
             var result = from story in StoryCollection group story by story.GroupName into api orderby api.Key select api;
             StoriesByApi.Source = result;
         }

@@ -101,6 +101,8 @@
     <Compile Include="Contacts\OrganizationStories.cs" />
     <Compile Include="Extensions\ExtensionSnippets.cs" />
     <Compile Include="Extensions\ExtensionStories.cs" />
+    <Compile Include="Batching\BatchingSnippets.cs" />
+    <Compile Include="Batching\BatchingStories.cs" />
     <Compile Include="Groups\GroupStories.cs" />
     <Compile Include="Groups\GroupSnippets.cs" />
     <Compile Include="MainPage.xaml.cs">
