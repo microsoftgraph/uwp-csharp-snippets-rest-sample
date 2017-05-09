@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace O365_UWP_Unified_API_Snippets
 {
@@ -14,14 +9,14 @@ namespace O365_UWP_Unified_API_Snippets
 
         public static async Task<bool> TryRunParallelBatch()
         {
-            var extensions = await BatchingSnippets.ParallelBatchCallAsync();
-            return extensions != null;
+            var batchResponse = await BatchingSnippets.ParallelBatchCallAsync();
+            return batchResponse != null;
         }
 
         public static async Task<bool> TryRunSequentialBatch()
         {
-            var extensions = await BatchingSnippets.SequentialBatchCallAsync();
-            return extensions != null;
+            var batchResponse = await BatchingSnippets.SequentialBatchCallAsync();
+            return batchResponse != null;
         }
     }
 }
