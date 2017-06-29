@@ -12,7 +12,7 @@
 * [Additional resources](#additional-resources)
 
 <a name="introduction"></a>
-##Introduction
+## Introduction
 
 This sample shows how to use the Microsoft Graph API to send email, manage groups, and perform other activities with Office 365 data.
 Microsoft Graph exposes multiple APIs from Microsoft cloud services through a single REST API endpoint. This repository shows you how to access multiple resources, including Microsoft Azure Active Directory (AD) and the Office 365 APIs, by making HTTP requests to the Microsoft Graph API in a Windows 10 universal app. 
@@ -30,7 +30,7 @@ This sample requires the following:
   * Either a [Microsoft](www.outlook.com) or [Office 365 for business account](https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment#bk_Office365Account).
 
 <a name="register"></a>
-##Register and configure the app
+## Register and configure the app
 
 1. Sign into the [App Registration Portal](https://apps.dev.microsoft.com/) using either your personal or work or school account.
 2. Select **Add an app**.
