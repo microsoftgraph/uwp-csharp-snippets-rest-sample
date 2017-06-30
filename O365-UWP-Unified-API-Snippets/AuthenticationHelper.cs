@@ -55,10 +55,9 @@ namespace O365_UWP_Unified_API_Snippets
 
             try
             {
-                authResult = await IdentityClientApp.AcquireTokenSilentAsync(scopes);
-                TokenForUser = authResult.Token;
+                authResult = await IdentityClientApp.AcquireTokenSilentAsync(scopes, IdentityClientApp.Users.First());
+                TokenForUser = authResult.AccessToken;
                 // save user ID in local storage
-                _settings.Values["userID"] = authResult.User.UniqueId;
                 _settings.Values["userEmail"] = authResult.User.DisplayableId;
                 _settings.Values["userName"] = authResult.User.Name;
             }
@@ -69,11 +68,10 @@ namespace O365_UWP_Unified_API_Snippets
                 {
                     authResult = await IdentityClientApp.AcquireTokenAsync(scopes);
 
-                    TokenForUser = authResult.Token;
+                    TokenForUser = authResult.AccessToken;
                     Expiration = authResult.ExpiresOn;
 
                     // save user ID in local storage
-                    _settings.Values["userID"] = authResult.User.UniqueId;
                     _settings.Values["userEmail"] = authResult.User.DisplayableId;
                     _settings.Values["userName"] = authResult.User.Name;
                 }
@@ -89,13 +87,12 @@ namespace O365_UWP_Unified_API_Snippets
         {
             foreach (var user in IdentityClientApp.Users)
             {
-                user.SignOut();
+                IdentityClientApp.Remove(user);
             }
 
             TokenForUser = null;
 
             //Clear stored values from last authentication.
-            _settings.Values["userID"] = null;
             _settings.Values["userEmail"] = null;
             _settings.Values["userName"] = null;
 
