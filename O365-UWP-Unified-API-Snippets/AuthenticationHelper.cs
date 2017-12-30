@@ -19,7 +19,10 @@ namespace O365_UWP_Unified_API_Snippets
         // The Client ID is used by the application to uniquely identify itself to the v2.0 authentication endpoint.
         static string clientId = App.Current.Resources["ida:ClientID"].ToString();
 
-        public static PublicClientApplication IdentityClientApp = new PublicClientApplication(clientId);
+        public static PublicClientApplication IdentityClientApp = new PublicClientApplication(clientId)
+        {
+            RedirectUri = App.Current.Resources["ida:ReturnUrl"].ToString()
+        };
 
         public static string TokenForUser = null;
         public static DateTimeOffset Expiration;
@@ -55,26 +58,26 @@ namespace O365_UWP_Unified_API_Snippets
 
             try
             {
-                authResult = await IdentityClientApp.AcquireTokenSilentAsync(scopes, IdentityClientApp.Users.First());
+                authResult = await IdentityClientApp.AcquireTokenSilentAsync(scopes, IdentityClientApp.Users.FirstOrDefault());
                 TokenForUser = authResult.AccessToken;
                 // save user ID in local storage
                 _settings.Values["userEmail"] = authResult.User.DisplayableId;
                 _settings.Values["userName"] = authResult.User.Name;
             }
-
-            catch (Exception)
+            catch (MsalUiRequiredException)
             {
-                if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
-                {
-                    authResult = await IdentityClientApp.AcquireTokenAsync(scopes);
+                authResult = await IdentityClientApp.AcquireTokenAsync(scopes);
 
-                    TokenForUser = authResult.AccessToken;
-                    Expiration = authResult.ExpiresOn;
+                TokenForUser = authResult.AccessToken;
+                Expiration = authResult.ExpiresOn;
 
-                    // save user ID in local storage
-                    _settings.Values["userEmail"] = authResult.User.DisplayableId;
-                    _settings.Values["userName"] = authResult.User.Name;
-                }
+                // save user ID in local storage
+                _settings.Values["userEmail"] = authResult.User.DisplayableId;
+                _settings.Values["userName"] = authResult.User.Name;
+            }
+            catch (Exception exc)
+            {
+                Debug.WriteLine(exc.StackTrace);
             }
 
             return TokenForUser;
