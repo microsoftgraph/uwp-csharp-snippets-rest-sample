@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Identity.Client;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -33,6 +34,8 @@ namespace O365_UWP_Unified_API_Snippets
         {
             this.InitializeComponent();
             CreateStoryList();
+            Logger.LogCallback = delegate(Logger.LogLevel level, string message, bool pii) { Debug.WriteLine(level + " - " + message); };
+            Logger.Level = Logger.LogLevel.Info;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
